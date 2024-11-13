@@ -1,0 +1,30 @@
+{% extends "djangoHome/base.html" %}
+
+{% block title %}Создать пост{% endblock %}
+
+{% block extra_css %}
+
+<style>
+    form p label {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center fs-1">Создать пост</h1>
+
+<form method="post" class="form-horizontal">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary fs-5">Создать пост</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
