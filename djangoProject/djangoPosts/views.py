@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from .models import Author, Genre, Post, Comment
 from .forms import PostForm, CommentForm
 
-# Create your views here.
 def post_list(request):
     genre_id = request.GET.get('genre_id')
     if genre_id:
@@ -10,12 +11,18 @@ def post_list(request):
     else:
         posts = Post.objects.all()
     
+    paginator = Paginator(posts, 6)  # Показывать 5 постов на странице
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
     genres = Genre.objects.all()
     context = {
-        'posts': posts, 
+        'page_obj': page_obj,
         'genres': genres
     }
     return render(request, 'djangoPosts/post_list.html', context)
+
+# Остальные представления остаются без изменений
 
 
 def post(request, id):
@@ -40,9 +47,10 @@ def post(request, id):
     return render(request, 'djangoPosts/post.html', context)
 
 
+@login_required
 def create_post(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('post_list')

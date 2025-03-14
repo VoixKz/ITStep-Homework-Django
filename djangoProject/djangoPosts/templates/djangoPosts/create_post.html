@@ -17,7 +17,7 @@
 
 <h1 class="text-center fs-1">Создать пост</h1>
 
-<form method="post" class="form-horizontal">
+<form method="post" enctype="multipart/form-data" class="form-horizontal">
     {% csrf_token %}
     {{ form.as_p }}
     <div class="form-group">

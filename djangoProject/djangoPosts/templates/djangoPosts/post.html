@@ -17,8 +17,12 @@
             <h5 class="text-muted">{{ post.subtitle }}</h5>
         </div>
         <div class="card-body">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="img-fluid mb-3" alt="Изображение поста">
+            {% endif %}
             <p>{{ post.content|linebreaksbr }}</p>
         </div>
+        
         <div class="card-footer text-muted d-flex justify-content-between">
             <small>Автор: {{ post.author }}</small>
             <small>Дата создания: {{ post.created_at|date:"d.m.Y, H:i" }}</small>

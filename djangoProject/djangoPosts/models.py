@@ -58,6 +58,7 @@ class Post(models.Model):
     )
     created_at = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name='posts', verbose_name="Жанр")
+    image = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name="Изображение")
 
     def __str__(self):
         return f"{self.genre} | {self.title}"
